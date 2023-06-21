@@ -1,17 +1,26 @@
 import React from 'react'
+import {format} from 'date-fns'
+import {Link} from 'react-router-dom'
 
-const Post = () => {
+const Post = ({_id, title, summary, cover, content, createdAt, author}) => {
   return (
     <>
         <div className='post'>
-          <div className='image'><img src='/first-entry.jpeg' alt='old technology'/></div>
+          <div className='image'>
+            <Link to={`post/${_id}`}>
+              <img src={`http://localhost:8000/${cover}`} alt='old technology'/>
+            </Link>
+          </div>
           <div className='texts'>
-            <h2>Deep Work with Web Development</h2>
+            <Link to={`post/${_id}`}>
+              <h2>{title}</h2>
+            </Link>
+            
             <p className='info'>
-              <a href='/' className='author'>Christian Stander</a>
-              <time>2023-06-20 13:28</time>
+              <a href='/' className='author'>{author.username}</a>
+              <time>{format(new Date(createdAt), "MMM d, yyyy, HH:mm")}</time>
             </p>
-            <p className='summary'>Deep work is a practice wherein you need to eliminate unnecessary things, even some necessary things, to achieve your main goal.</p>
+            <p className='summary'>{summary}</p>
           </div>
         </div>
     </>

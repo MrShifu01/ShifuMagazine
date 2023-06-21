@@ -1,27 +1,23 @@
 import {Link} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import {UserContext} from "../UserContext";
 
 export default function Header() {
   const {setUserInfo,userInfo} = useContext(UserContext);
   
-  useEffect(() => {
-    const fetchUserInfo = async() => {
-      try {
-        const response = await fetch('http://localhost:8000/profile', {
-          credentials: 'include'
-        })
-        const userInfo = await response.json()
-        setUserInfo(userInfo)
-      } catch (e) {
-        console.error('Error fetching user info:', e);
-      }
-    }
-    fetchUserInfo()
-  }, [])
+    useEffect(() => {
+      fetch('http://localhost:8000/profile', {
+        credentials: 'include',
+        method: "GET"
+      }).then(response => {
+        response.json().then(userInfo => {
+          setUserInfo(userInfo);
+        });
+      });
+    }, [setUserInfo]);
 
-  function logout() {
-    fetch('http://localhost:8000/logout', {
+  async function logout() {
+    await fetch('http://localhost:8000/logout', {
       credentials: 'include',
       method: 'POST',
     });
@@ -32,12 +28,12 @@ export default function Header() {
 
   return (
     <header>
-      <Link to="/" className="logo">MyBlog</Link>
+      <Link to="/" className="logo">Shifu Magazine</Link>
       <nav>
         {username && (
           <>
             <Link to="/create">Create new post</Link>
-            <a onClick={logout}>Logout ({username})</a>
+            <a href="/" onClick={logout}>Logout ({username})</a>
           </>
         )}
         {!username && (

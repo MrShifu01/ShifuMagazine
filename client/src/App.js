@@ -4,7 +4,9 @@ import { Route, Routes } from 'react-router-dom'
 import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import CreatePostPage from './pages/CreatePostPage';
 import { UserContextProvider } from './UserContext';
+import PostPage from './pages/PostPage';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route index element={<IndexPage/>}/>
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
+          <Route path='/create' element={<CreatePostPage/>}/>
+          <Route path='/post/:id' element={<PostPage/>}/>
         </Route>
       </Routes>
     </UserContextProvider>
